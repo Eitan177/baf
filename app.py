@@ -10,6 +10,8 @@ usegenomicCoordinate=st.checkbox('Use genomic coordinates instead of indices')
 if mvfe != None:
     chart_data = pd.read_table(mvfe,sep='\t')
     if onlysnps:
+
+        st.write(mvfe)
         mvfe=mvfe.iloc[np.where(mvfe['rsID'].str.contains('rs'))[0]]
     # Display a scatterplot chart
     cola,colb,colc= st.columns(3)
