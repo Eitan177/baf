@@ -4,6 +4,9 @@ import numpy as np
 st.set_page_config(layout='wide')
 st.title('Plot allele frequency column from vcf file')
 mvfe=st.file_uploader('Upload master variant file extreme here')
+onlysnps=st.checkbox('only SNPs')
+if onlysnps:
+    mvfe=mvfe.iloc[np.where(mvfe['rsID'].str.contains('rs'))[0]]
 if mvfe != None:
     chart_data = pd.read_table(mvfe,sep='\t')
 
