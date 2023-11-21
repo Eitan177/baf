@@ -5,7 +5,7 @@ st.set_page_config(layout='wide')
 st.title('Plot allele frequency column from vcf file')
 mvfe=st.file_uploader('Upload master variant file extreme here')
 onlysnps=st.checkbox('only SNPs')
-usegenomicCoordinate=st.checkboc('Use genomic coordinates instead of indices')
+usegenomicCoordinate=st.checkbox('Use genomic coordinates instead of indices')
 
 if mvfe != None:
     chart_data = pd.read_table(mvfe,sep='\t')
