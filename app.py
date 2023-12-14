@@ -8,7 +8,7 @@ onlysnps=st.checkbox('only SNPs')
 usegenomicCoordinate=st.checkbox('Use genomic coordinates instead of indices')
 
 if mvfe != None:
-    if uploaded_file.type == "text/csv":
+    if mvfe.type == "text/csv":
         st.write('reading text file')
         chart_data = pd.read_table(mvfe,sep='\t')
     else:
