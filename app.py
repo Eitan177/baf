@@ -6,6 +6,7 @@ st.title('Plot allele frequency column from vcf file')
 mvfe=st.file_uploader('Upload master variant file extreme here',type=['txt','maf'])
 onlysnps=st.checkbox('only SNPs')
 usegenomicCoordinate=st.checkbox('Use genomic coordinates instead of indices')
+colorselection=st.radio('color points using:', ['Gene','DBSNP'])
 
 if mvfe != None:
     if mvfe.type == "text/plain":
@@ -20,30 +21,35 @@ if mvfe != None:
         chart_data['CHROM']=chart_data['Chromosome']
     if onlysnps:
         chart_data=chart_data.iloc[np.where(chart_data['rsID'].str.contains('rs'))[0]]
-    # Display a scatterplot chart
+    if not usegenomicCoordinate:
+        chart_data['ind']=np.arange(0,chart_data.shape[0])
+    else:
+        chart_data['ind']=  chart_data['POS']
+    if colorselection=='Gene':    
+        chart_data['gene_v_snp']=[str(y) for y in chart_data['GENE']] 
+    else:    
+        chart_data['gene_v_snp']=[str(y) for y in chart_data['dbSNP_RS']]    
+        
+    # Display a scatterplot chart  
     cola,colb,colc= st.columns(3)
     m=0
     for a in np.unique(chart_data['CHROM']):
         chrom = chart_data[chart_data['CHROM']==a]
-        if not usegenomicCoordinate:
-            chrom['ind']=np.arange(0,chrom.shape[0])
-        else:
-            chrom['ind']=  chrom['POS']
-        chrom['gene']=[str(y) for y in chrom['GENE']] 
+
         chrom.reset_index(inplace=True)
         if m % 3 == 0:
             with cola:
                 st.title(a+ ' x-axis index')
-                st.scatter_chart(chrom,x='ind', y='AF',size=30,color='gene')
+                st.scatter_chart(chrom,x='ind', y='AF',size=30,color='gene_v_snp')
         elif m % 3 == 1:    
             with colb:
                 st.title(a+ ' x-axis index')
-                st.scatter_chart(chrom,x='ind', y='AF',size=30,color='gene')
+                st.scatter_chart(chrom,x='ind', y='AF',size=30,color='gene_v_snp')
 
         elif m % 3 == 2:  
                
             with colc:
                 st.title(a+ ' x-axis index')
-                st.scatter_chart(chrom,x='ind', y='AF',size=30,color='gene')            
+                st.scatter_chart(chrom,x='ind', y='AF',size=30,color='gene_v_snp')            
         m+=1        
     st.write(chart_data)   
