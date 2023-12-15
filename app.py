@@ -34,7 +34,7 @@ if mvfe != None:
     for a in np.unique(chart_data['CHROM']):
         chrom = chart_data[chart_data['CHROM']==a]
         if not usegenomicCoordinate:
-        chrom['ind']=np.arange(0,chrom.shape[0])
+            chrom['ind']=np.arange(0,chrom.shape[0])
         chrom.reset_index(inplace=True)
         if m % 3 == 0:
             with cola:
