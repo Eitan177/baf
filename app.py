@@ -21,10 +21,8 @@ if mvfe != None:
         chart_data['CHROM']=chart_data['Chromosome']
     if onlysnps:
         chart_data=chart_data.iloc[np.where(chart_data['rsID'].str.contains('rs'))[0]]
-    if not usegenomicCoordinate:
-        chart_data['ind']=np.arange(0,chart_data.shape[0])
-    else:
-        chart_data['ind']=  chart_data['POS']
+        
+    chart_data['ind']=  chart_data['POS']
     if colorselection=='Gene':    
         chart_data['gene_v_snp']=[str(y) for y in chart_data['GENE']] 
     else:    
@@ -35,7 +33,8 @@ if mvfe != None:
     m=0
     for a in np.unique(chart_data['CHROM']):
         chrom = chart_data[chart_data['CHROM']==a]
-
+        if not usegenomicCoordinate:
+        chrom['ind']=np.arange(0,chrom.shape[0])
         chrom.reset_index(inplace=True)
         if m % 3 == 0:
             with cola:
