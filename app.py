@@ -13,7 +13,7 @@ if mvfe != None:
     if mvfe.type == "text/plain":
         st.write('reading text file')
         chart_data = pd.read_table(mvfe,sep='\t')
-    elif mvfe.name[0].str.contains('table'):
+    elif mvfe.name.contains('table'):
         st.write('reading table file')
         chart_data = pd.read_table(mvfe,sep='\t',skiprows=1)
         st.write(chart_data)
