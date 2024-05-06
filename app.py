@@ -9,7 +9,7 @@ usegenomicCoordinate=st.checkbox('Use genomic coordinates instead of indices')
 colorselection=st.radio('color points using:', ['Gene','DBSNP'])
 
 if mvfe != None:
-    st.write(mvfe.type)
+    st.write(mvfe)
     if mvfe.type == "text/plain":
         st.write('reading text file')
         chart_data = pd.read_table(mvfe,sep='\t')
