@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 st.set_page_config(layout='wide')
 st.title('Plot allele frequency column from vcf file')
-mvfe=st.file_uploader('Upload master variant file extreme here',type=['txt','maf'])
+mvfe=st.file_uploader('Upload master variant file extreme here',type=['txt','maf','table'])
 onlysnps=st.checkbox('only SNPs')
 usegenomicCoordinate=st.checkbox('Use genomic coordinates instead of indices')
 colorselection=st.radio('color points using:', ['Gene','DBSNP'])
@@ -12,6 +12,10 @@ if mvfe != None:
     if mvfe.type == "text/plain":
         st.write('reading text file')
         chart_data = pd.read_table(mvfe,sep='\t')
+    elif mvfe.type=='table':
+        st.write('reading table file')
+        chart_data = pd.read_table(mvfe,sep='\t',skiprows=1)
+        st.write(chart_data)
     else:
         st.write('reading maf file')
         chart_data = pd.read_csv(mvfe,sep='\t',skiprows=1)    
