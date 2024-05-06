@@ -16,8 +16,11 @@ if mvfe != None:
         chart_data = pd.read_table(mvfe,sep='\t')
     elif re.findall('table',mvfe.name):
         st.write('reading table file')
-        chart_data = pd.read_table(mvfe,sep='\t',skiprows=1)
-        st.write(chart_data)
+        chart_data = pd.read_table(mvfe,sep='\t',skiprows=1)    
+        chart_data['AF']=chart_data['allele_frequency'] 
+        chart_data['POS']=chart_data['position']
+        chart_data['GENE']=chart_data['alt_count']
+        chart_data['CHROM']=chart_data['contig']
     else:
         st.write('reading maf file')
         chart_data = pd.read_csv(mvfe,sep='\t',skiprows=1)    
