@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import re
 st.set_page_config(layout='wide')
 st.title('Plot allele frequency column from vcf file')
 mvfe=st.file_uploader('Upload master variant file extreme here',type=['txt','maf','table'])
@@ -13,7 +14,7 @@ if mvfe != None:
     if mvfe.type == "text/plain":
         st.write('reading text file')
         chart_data = pd.read_table(mvfe,sep='\t')
-    elif mvfe.name.contains('table'):
+    elif re.findall('table',mvfe.name):
         st.write('reading table file')
         chart_data = pd.read_table(mvfe,sep='\t',skiprows=1)
         st.write(chart_data)
