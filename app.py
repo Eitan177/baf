@@ -18,7 +18,7 @@ if mvfe != None:
         st.write('reading table file')
         chart_data = pd.read_table(mvfe,sep='\t',skiprows=1)    
         chart_data['AF']=chart_data['allele_frequency'] 
-        chart_data['POS']=chart_data['position'].apply(lambda x: re.sub(',','',x),axis=1).astype(int)
+        chart_data['POS']=chart_data['position'].apply(lambda x: np.int(re.sub(',','',x)),axis=1)
         chart_data['GENE']=chart_data['alt_count']
         chart_data['CHROM']=chart_data['contig']
     else:
