@@ -8,7 +8,7 @@ onlysnps=st.checkbox('only SNPs')
 usegenomicCoordinate=st.checkbox('Use genomic coordinates instead of indices')
 colorselection=st.radio('color points using:', ['Gene','DBSNP'])
 
-if mvfe != None
+if mvfe != None:
     st.write(mvfe.type)
     if mvfe.type == "text/plain":
         st.write('reading text file')
