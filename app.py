@@ -24,13 +24,18 @@ if mvfe != None:
     else:
         st.write('reading maf file')
         chart_data = pd.read_csv(mvfe,sep='\t',skiprows=1)    
-        chart_data['AF']=chart_data['DP4'].str.split(',',expand=True).astype(int).apply(lambda x: x[2:4].sum()/x.sum(),axis=1) 
+        try:
+            chart_data['AF']=chart_data['DP4'].str.split(',',expand=True).astype(int).apply(lambda x: x[2:4].sum()/x.sum(),axis=1) 
+        except:
+            chart_data['AF']=chart_data['t_AF']
         chart_data['POS']=chart_data['Start_Position']
         chart_data['GENE']=chart_data['Hugo_Symbol']
         chart_data['CHROM']=chart_data['Chromosome']
     if onlysnps:
-        chart_data=chart_data.iloc[np.where(chart_data['rsID'].str.contains('rs'))[0]]
-        
+        try:
+            chart_data=chart_data.iloc[np.where(chart_data['rsID'].str.contains('rs'))[0]]
+        except:
+             chart_data=chart_data.iloc[np.where(chart_data['dbSNP_RS'].str.contains('rs'))[0]]
     chart_data['ind']=  chart_data['POS']
     if colorselection=='Gene':    
         chart_data['gene_v_snp']=[str(y) for y in chart_data['GENE']] 
