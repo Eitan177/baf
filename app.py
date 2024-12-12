@@ -25,9 +25,9 @@ if mvfe != None:
         st.write('reading maf file')
         chart_data = pd.read_csv(mvfe,sep='\t',skiprows=1)    
         try:
-            chart_data['AF']=chart_data['DP4'].str.split(',',expand=True).astype(int).apply(lambda x: x[2:4].sum()/x.sum(),axis=1) 
+            chart_data['AF']=chart_data[[.apply(lambda x: x[2:4].sum()/x.sum(),axis=1) 
         except:
-            chart_data['AF']=chart_data['t_AF']
+            chart_data['AF']=chart_data[['t_alt_count',t_depth']].apply(lambda x: x[0]/x[1],axis=1)
         chart_data['POS']=chart_data['Start_Position']
         chart_data['GENE']=chart_data['Hugo_Symbol']
         chart_data['CHROM']=chart_data['Chromosome']
